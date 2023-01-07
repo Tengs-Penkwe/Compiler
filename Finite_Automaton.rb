@@ -66,7 +66,7 @@ class NFARulebook < Struct.new(:rules)
 end
 
 class NFA < Struct.new(:current, :accept, :rulebook)
-  def current 
+  def current  
     rulebook.follow_free_moves(super)
   end
   def accepting?
@@ -84,12 +84,12 @@ end
 
 class NFADesign < Struct.new(:current, :accept, :rulebook)
   def to_nfa
-    NFA.new(:current, :accept, :rulebook)
+    NFA.new(current, accept, rulebook)
   end
   def accepts?(string)
-    nfa = to_nfa.read_string(string)
-    nfa.accepting?
-    # to_nfa.tap {|nfa| nfa.read_string(string)}.accepting?
+    # nfa = to_nfa.read_string(string)
+    # nfa.accepting?
+    to_nfa.tap {|nfa| nfa.read_string(string)}.accepting?
   end
 end
 
